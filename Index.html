@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PILAR | Luxury Watchmaking</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #f3e5ab;
+            --black-deep: #050505;
+            --black-soft: #111111;
+            --gray-text: #a0a0a0;
+            --white: #ffffff;
+            --transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--black-deep);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        /* --- UTILIDADES --- */
+        .gold-text { color: var(--gold); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 0%; height: 100%;
+            background: var(--gold);
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .btn:hover::before { width: 100%; }
+        .btn:hover { color: var(--black-deep); }
+
+        .btn-secondary {
+            border-color: var(--white);
+            color: var(--white);
+        }
+        .btn-secondary::before { background: var(--white); }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            transition: var(--transition);
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            color: var(--white);
+        }
+        
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-text); }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Simulación de fondo animado (Gears/Lights) */
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: repeating-linear-gradient(transparent, transparent 10px, rgba(212, 175, 55, 0.03) 12px);
+            animation: rotateBg 60s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotateBg { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .hero-content { z-index: 2; max-width: 800px; padding: 20px; }
+
+        .hero h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p { font-size: 1.2rem; color: var(--gray-text); margin-bottom: 40px; letter-spacing: 2px; }
+
+        .hero-btns { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+        /* --- ABOUT SECTION --- */
+        .about { padding: 100px 0; background: var(--black-soft); position: relative; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-header h2 { font-size: 3rem; margin-bottom: 20px; color: var(--gold); }
+        .section-header p { max-width: 600px; margin: 0 auto; color: var(--gray-text); }
+        .separator { width: 60px; height: 2px; background: var(--gold); margin: 20px auto; }
+
+        /* --- COLLECTIONS (3D CARDS) --- */
+        .collections { padding: 100px 0; background: var(--black-deep); }
+        .grid-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            group: hover;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: var(--gold);
+        }
+
+        .img-container {
+            height: 350px;
+            overflow: hidden;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .product-card:hover .img-container img { transform: scale(1.1); }
+
+        .card-details { padding-top: 20px; text-align: center; }
+        .card-details h3 { font-size: 1.4rem; color: var(--white); margin-bottom: 10px; }
+        .price { font-size: 1.2rem; color: var(--gold); font-weight: 600; margin-bottom: 15px; display: block; }
+        
+        .btn-card {
+            font-size: 0.7rem;
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white);
+            transition: 0.3s;
+        }
+        .btn-card:hover { background: var(--gold); border-color: var(--gold); color: var(--black-deep); }
+
+        /* --- TECH SECTION --- */
+        .tech-section {
+            padding: 120px 0;
+            background: fixed url('https://images.unsplash.com/photo-1594576722512-582bcd46fba3?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            position: relative;
+        }
+        .tech-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+        }
+        .tech-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .tech-text h2 { font-size: 3rem; margin-bottom: 30px; }
+        .tech-list li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+        .tech-list i { color: var(--gold); margin-right: 15px; font-size: 1.2rem; }
+
+        /* --- SELLER PROFILE --- */
+        .seller-section { padding: 100px 0; background: linear-gradient(to bottom, #111, #050505); }
+        .seller-card {
+            background: rgba(255,255,255,0.02);
+            border-left: 4px solid var(--gold);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .seller-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #333;
+            overflow: hidden;
+            border: 2px solid var(--gold);
+        }
+        .seller-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .seller-info h3 { font-size: 2rem; margin-bottom: 5px; }
+        .seller-info span { color: var(--gold); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; }
+        .seller-info p { margin-top: 15px; color: var(--gray-text); line-height: 1.6; }
+
+        /* --- CONTACT & FOOTER --- */
+        .contact { padding: 80px 0; text-align: center; }
+        
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            z-index: 9999;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+        .floating-whatsapp:hover { transform: scale(1.1); }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        footer {
+            background: #000;
+            padding: 50px 0 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer-links { margin: 30px 0; }
+        .footer-links a { margin: 0 15px; font-size: 0.9rem; color: var(--gray-text); }
+        .footer-links a:hover { color: var(--white); }
+        .copyright { font-size: 0.8rem; color: #555; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .tech-content { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Simplified for demo */
+            .seller-card { text-align: center; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="navbar">
+        <div class="container">
+            <nav>
+                <div class="logo">PILAR</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#about">Marca</a></li>
+                    <li><a href="#collection">Colección</a></li>
+                    <li><a href="#tech">Tecnología</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+                <a href="https://walink.co/svraqm" target="_blank" class="btn" style="padding: 10px 20px; font-size: 0.7rem;">WhatsApp</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
+            <h1>PILAR<br><span style="font-size: 0.5em; font-weight: 300; font-family: Montserrat;">Timepiece Excellence</span></h1>
+            <p>Precisión. Elegancia. Una tradición que perdura en el tiempo.</p>
+            <div class="hero-btns">
+                <a href="#collection" class="btn">Explorar Colección</a>
+                <a href="https://walink.co/svraqm" target="_blank" class="btn btn-secondary">Contactar Asesor</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>La Esencia del Tiempo</h2>
+                <div class="separator"></div>
+                <p>En PILAR, no solo vendemos relojes; ofrecemos piezas de ingeniería mecánica diseñadas para trascender generaciones. Cada detalle, desde el cristal de zafiro hasta el mecanismo interno, es seleccionado para garantizar la máxima precisión.</p>
+            </div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; text-align: center; margin-top: 50px;">
+                <div style="flex: 1; min-width: 200px; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-gem gold-text" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                    <h4 style="letter-spacing: 2px;">LUJO</h4>
+                </div>
+                <div style="flex: 1; min-width: 200px; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-cogs gold-text" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                    <h4 style="letter-spacing: 2px;">PRECISIÓN</h4>
+                </div>
+                <div style="flex: 1; min-width: 200px; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-history gold-text" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                    <h4 style="letter-spacing: 2px;">TRADICIÓN</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="collections" id="collection">
+        <div class="container">
+            <div class="section-header" data-aos="fade-down">
+                <h2>Nuestra Colección</h2>
+                <div class="separator"></div>
+                <p>Piezas seleccionadas para coleccionistas exigentes.</p>
+            </div>
+
+            <div class="grid-gallery">
+                
+                <div class="product-card" data-aos="fade-up">
+                    <div class="img-container">
+                        <img src="IMG-20251217-WA0100.jpg" alt="Tissot Classic Blue">
+                    </div>
+                    <div class="card-details">
+                        <h3>Tissot Blue Legacy</h3>
+                        <p style="font-size: 0.9rem; color:#aaa; margin-bottom:10px;">Caja de acero, esfera azul profundo.</p>
+                        <span class="price">120 Bs.</span>
+                        <a href="https://walink.co/svraqm?text=Hola,%20me%20interesa%20el%20Tissot%20Blue%20Legacy" class="btn-card">Solicitar</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="img-container">
+                        <img src="IMG-20251217-WA0103.jpg" alt="S&T Sport">
+                    </div>
+                    <div class="card-details">
+                        <h3>S&T Chrono Sport</h3>
+                        <p style="font-size: 0.9rem; color:#aaa; margin-bottom:10px;">Diseño robusto con acentos naranja.</p>
+                        <span class="price">100 Bs.</span>
+                        <a href="https://walink.co/svraqm?text=Hola,%20me%20interesa%20el%20S&T%20Chrono%20Sport" class="btn-card">Solicitar</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="img-container">
+                        <img src="IMG-20251217-WA0088.jpg" alt="Casio Executive">
+                    </div>
+                    <div class="card-details">
+                        <h3>Casio Executive Silver</h3>
+                        <p style="font-size: 0.9rem; color:#aaa; margin-bottom:10px;">Elegancia atemporal y funcionalidad.</p>
+                        <span class="price">95 Bs.</span>
+                        <a href="https://walink.co/svraqm?text=Hola,%20me%20interesa%20el%20Casio%20Executive" class="btn-card">Solicitar</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-aos="fade-up">
+                    <div class="img-container">
+                        <img src="IMG-20251217-WA0113.jpg" alt="Gold Diamond">
+                    </div>
+                    <div class="card-details">
+                        <h3>Royal Gold Edition</h3>
+                        <p style="font-size: 0.9rem; color:#aaa; margin-bottom:10px;">Acabado en oro con incrustaciones.</p>
+                        <span class="price">120 Bs.</span>
+                        <a href="https://walink.co/svraqm?text=Hola,%20me%20interesa%20el%20Royal%20Gold" class="btn-card">Solicitar</a>
+                    </div>
+                </div>
+
+                <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="img-container">
+                        <img src="IMG-20251217-WA0104.jpg" alt="S&T Aviator White">
+                    </div>
+                    <div class="card-details">
+                        <h3>S&T Aviator White</h3>
+                        <p style="font-size: 0.9rem; color:#aaa; margin-bottom:10px;">Correa de cuero, cronógrafo preciso.</p>
+                        <span class="price">100 Bs.</span>
+                        <a href="https://walink.co/svraqm?text=Hola,%20me%20interesa%20el%20Aviator%20White" class="btn-card">Solicitar</a>
+                    </div>
+                </div>
+
+                 <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="img-container">
+                        <img src="IMG-20251217-WA0114.jpg" alt="Gold Classic Pearl">
+                    </div>
+                    <div class="card-details">
+                        <h3>Pearl Gold Classic</h3>
+                        <p style="font-size: 0.9rem; color:#aaa; margin-bottom:10px;">Diseño femenino, delicado y lujoso.</p>
+                        <span class="price">80 Bs.</span>
+                        <a href="https://walink.co/svraqm?text=Hola,%20me%20interesa%20el%20Pearl%20Gold" class="btn-card">Solicitar</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-section" id="tech">
+        <div class="tech-overlay"></div>
+        <div class="container tech-content">
+            <div class="tech-text" data-aos="fade-right">
+                <h2>Ingeniería de Precisión</h2>
+                <p style="font-size: 1.2rem; line-height: 1.8; color: #ddd; margin-bottom: 30px;">
+                    Cada reloj PILAR es sometido a rigurosas pruebas de calidad. Utilizamos movimientos de cuarzo y automáticos calibrados para garantizar una exactitud perfecta.
+                </p>
+                <a href="#collection" class="btn">Ver Especificaciones</a>
+            </div>
+            <div data-aos="fade-left">
+                <ul class="tech-list">
+                    <li><i class="fas fa-check-circle"></i> Cristal de Zafiro resistente a rayaduras</li>
+                    <li><i class="fas fa-check-circle"></i> Acero Inoxidable de grado quirúrgico</li>
+                    <li><i class="fas fa-check-circle"></i> Resistencia al agua certificada</li>
+                    <li><i class="fas fa-check-circle"></i> Correas de cuero genuino tratado</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="seller-section">
+        <div class="container" data-aos="zoom-in">
+            <div class="seller-card">
+                <div class="seller-img">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" alt="Seller Profile">
+                </div>
+                <div class="seller-info">
+                    <span>Asesoría Personalizada</span>
+                    <h3>Tu Experto en Relojería</h3>
+                    <p>Con años de experiencia en el mercado de alta gama, estoy aquí para guiarte en la elección del reloj perfecto que se adapte a tu estilo y personalidad. Atención 24/7 vía WhatsApp.</p>
+                    <br>
+                    <a href="https://walink.co/svraqm" class="btn btn-secondary"><i class="fab fa-whatsapp"></i> Hablar con el Experto</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <h2 class="logo" style="margin-bottom: 20px;">PILAR</h2>
+            <div class="footer-links">
+                <a href="#home">Inicio</a>
+                <a href="#collection">Colecciones</a>
+                <a href="https://walink.co/svraqm">Soporte</a>
+                <a href="#">Términos</a>
+            </div>
+            <div style="margin-bottom: 30px;">
+                <a href="#" style="color:white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color:white; margin: 0 10px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+            </div>
+            <p class="copyright">&copy; 2026 PILAR Watchmaking Co. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <a href="https://walink.co/svraqm" class="floating-whatsapp" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializar animaciones de scroll
+        AOS.init({
+            offset: 100,
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Efecto Navbar al hacer scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 0';
+                header.style.background = 'rgba(5,5,5,0.95)';
+            } else {
+                header.style.padding = '20px 0';
+                header.style.background = 'rgba(5,5,5,0.8)';
+            }
+        });
+    </script>
+</body>
+  </html>
